@@ -1,24 +1,36 @@
-from services.package_maneger import FindPackage, PackageManeger, ListPackages
+import argparse
+from services.package_manager import FindPackage, PackageManager, ListPackages
+
 
 class Main:
     def __init__(self):
-        package_maneger = PackageManeger()
+        self.parser = argparse.ArgumentParser(
+            description="Simple Package Manager"
+        )
+        self.package_manager = PackageManager()
+        self.package_name = ""
 
         self.commands = {
             "install": "blabla",
             "uninstall": "blabla",
-            "list": ListPackages(package_maneger),
-            "find": FindPackage(package_maneger)
+            "list": ListPackages(self.package_manager),
+            "find": FindPackage(self.package_manager)
         }
 
     def run(self):
-        package_name = str(input("Enter package name : "))
-        command = str(input("Enter command : "))
+        self.parser.add_argument("command", help="Command to run")
+        self.parser.add_argument("--package_name", help="Package name to proceed with")
+        args = self.parser.parse_args()
+        
+        if args.package_name:
+            self.package_name = args.package_name
 
-        command = self.commands[command]
+        command = self.commands[args.command]
         if command:
-            command.execute(package_name)
-
+            if self.package_name:
+                command.execute(self.package_name)
+            else:
+                command.execute()
 
 main = Main()
 main.run()

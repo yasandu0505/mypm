@@ -10,14 +10,12 @@ class Repository:
 
         
     def find_package(self,package_name):
-        print("\n")
         package = self.packages[package_name]
         if package:
             for key, value in package.items():
                 print(f"{key} - {value}")
     
     def list_packages(self):
-        print("\n")
         for package in self.packages:
             print(package)
 

@@ -16,12 +16,11 @@ class FindPackage(Command):
 
 
 class ListPackages(Command):
-    # TODO: in here even though we do not need package_name we have to provide, fix this... 
-    def execute(self, package_name):
+    def execute(self):
         self.package_manager.list_packages()
 
 
-class PackageManeger:
+class PackageManager:
 
     def __init__(self):
         self.repository = Repository()
