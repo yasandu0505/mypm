@@ -1,5 +1,5 @@
 import argparse
-from services.package_manager import FindPackage, PackageManager, ListPackages
+from services.package_manager import FindPackage, PackageManager, ListPackages, InstallPackage
 
 
 class Main:
@@ -11,7 +11,7 @@ class Main:
         self.package_name = ""
 
         self.commands = {
-            "install": "blabla",
+            "install": InstallPackage(self.package_manager),
             "uninstall": "blabla",
             "list": ListPackages(self.package_manager),
             "find": FindPackage(self.package_manager)
