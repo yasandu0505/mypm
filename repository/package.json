@@ -1,0 +1,27 @@
+{
+  "requests": {
+    "version": "2.0.0",
+    "link": "https://example.com/requests.zip",
+    "dependencies": [
+      "urllib3",
+      "certifi"
+    ]
+  },
+  "urllib3": {
+    "version": "1.0.0",
+    "link": "https://example.com/urllib3.zip",
+    "dependencies": [
+      "idna"
+    ]
+  },
+  "certifi": {
+    "version": "1.0.0",
+    "link": "https://example.com/certifi.zip",
+    "dependencies": []
+  },
+  "idna": {
+    "version": "3.0.0",
+    "link": "https://example.com/idna.zip",
+    "dependencies": []
+  }
+}
