@@ -1,13 +1,14 @@
-from services.package_maneger import FindPackage
+from services.package_maneger import FindPackage, PackageManeger, ListPackages
 
 class Main:
     def __init__(self):
+        package_maneger = PackageManeger()
 
         self.commands = {
             "install": "blabla",
             "uninstall": "blabla",
-            "list": "blabla",
-            "find": FindPackage()
+            "list": ListPackages(package_maneger),
+            "find": FindPackage(package_maneger)
         }
 
     def run(self):

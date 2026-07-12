@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from repository.repository import Repository
 
 class Command(ABC):
-    def __init__(self,):
-        self.repository = Repository()
+    def __init__(self, package_manager):
+        self.package_manager = package_manager
 
     @abstractmethod
     def execute(self):
@@ -12,11 +12,19 @@ class Command(ABC):
 
 class FindPackage(Command):
     def execute(self, package_name):
-        self.repository.find_package(package_name=package_name)
-    
-class PackageManeger(FindPackage):
+        self.package_manager.find_package(package_name=package_name)
+
+
+class ListPackages(Command):
+    # TODO: in here even though we do not need package_name we have to provide, fix this... 
+    def execute(self, package_name):
+        self.package_manager.list_packages()
+
+
+class PackageManeger:
+
     def __init__(self):
-        pass
+        self.repository = Repository()
 
     def install_package(self):
         pass
@@ -25,8 +33,7 @@ class PackageManeger(FindPackage):
         pass
 
     def list_packages(self):
-        pass
+        self.repository.list_packages()
 
     def find_package(self, package_name):
-        find = FindPackage(self.repository)
-        find.execute(package_name=package_name)
+        self.repository.find_package(package_name=package_name)
