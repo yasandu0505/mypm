@@ -5,10 +5,13 @@ class PackageDownloader(PackageManager):
         self.downloaded_packages = []
         super().__init__()
     
-    def download(self) -> list:
+    def download(self) -> dict:
         for package in self.packages_to_download:
             found_package = super().find_package(package_name=package)
-            print(f"Downloading package {found_package}...")
-
-            self.downloaded_packages.append(package)
+            if found_package:
+                print(f"Downloading package --------- {package}")
+                self.downloaded_packages.append({
+                    "name": package,
+                    "download_location": found_package["link"]
+                })
         return self.downloaded_packages

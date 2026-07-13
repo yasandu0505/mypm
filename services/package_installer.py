@@ -7,7 +7,6 @@ class PackageInstaller(PackageManager):
     
     def install(self) -> list:
         for package in self.packages_to_install:
-            found_package = super().find_package(package_name=package)
-            print(f"Installing package {found_package}...")
+            print(f"Installing package --------- {package["name"]} -> {package["download_location"]}")
             self.installed_packages.append(package)
         return self.installed_packages

@@ -38,17 +38,22 @@ class PackageManager:
         dependency_resolver = DependencyResolver(dependencies=package["dependencies"])
         resolved_dependencies = dependency_resolver.resolve()
         resolved_dependencies.append(package_name)
-        print(f"resolved dependencies --- {resolved_dependencies}")
+        print(f"Resolved dependencies --------- {resolved_dependencies}")
         downloader = PackageDownloader(packages_to_download=resolved_dependencies)
         downloaded_packages = downloader.download()
-        print(f"downloaded packages {downloaded_packages}")
+        print(f"Downloaded packages --------- {downloaded_packages}")
         installer = PackageInstaller(downloaded_packages)
         installed_packages = installer.install()
-        if installed_packages and package_name in installed_packages:
-            print(f"{package_name} was installed successfully")
+        if installed_packages:
             for package in installed_packages:
-                if package != package_name:
-                    print(f"{package}")
+                if package["name"] == package_name:
+                    print(f"------- {package["name"]} was installed successfully")
+                else:
+                    print(f"------- {package["name"]} was installed as dependency")
+            # print(f"{}")
+            # for package in installed_packages:
+            #     if package != package_name:
+            #         print(f"{package}")
 
 
     def uninstall_package(self):

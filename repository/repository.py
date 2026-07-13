@@ -7,15 +7,15 @@ class Repository:
         file_path = Path(__file__).parent / "package.json"
         with open(file=file_path ,mode="r", encoding="utf-8") as packages:
             self.packages = json.load(packages)
-
         
     def find_package(self,package_name):
-        print(f"Finding package ---------  {package_name}")
+        print(f"Finding package --------- {package_name}")
+        print("Package found")
         package = self.packages[package_name]
-        # if package:
-        #     for key, value in package.items():
-        #         print(f"{key} - {value}")
-        return package
+        if package:
+            for key, value in package.items():
+                print(f"{key} - {value}")
+            return package
     
     def list_packages(self):
         for package in self.packages:
