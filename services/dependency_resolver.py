@@ -15,15 +15,13 @@ class DependencyResolver:
             return
         print(f"fouuuuuuuuunnndddd  ----  {found_dependency["dependencies"]}")
         for dependencyy in found_dependency["dependencies"]:
-            self.final_dependency_list.append(dependencyy)
+            if dependencyy not in self.final_dependency_list:
+                self.final_dependency_list.insert(0,dependencyy)
             self.find_dependencies(dependency=dependencyy)
-        # self.final_dependency_list.append(dependency)
 
-    # TODO : modify this function to extract all the dependencies recursively for each package
     def resolve(self) -> list:
         print("\n")
         print(f"Resolving dependencies --------- {self.dependencies}")
-        
         for dependency in self.dependencies:
             self.find_dependencies(dependency=dependency)
             if dependency not in self.final_dependency_list:
