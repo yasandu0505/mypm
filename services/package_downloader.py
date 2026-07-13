@@ -1,13 +1,12 @@
-from .package_manager import PackageManager
-class PackageDownloader(PackageManager):
-    def __init__(self, packages_to_download):
+class PackageDownloader:
+    def __init__(self, packages_to_download, repository):
         self.packages_to_download = packages_to_download
         self.downloaded_packages = []
-        super().__init__()
+        self.repository = repository
     
     def download(self) -> dict:
         for package in self.packages_to_download:
-            found_package = super().find_package(package_name=package)
+            found_package = self.repository.find_package(package_name=package)
             if found_package:
                 print(f"Downloading package --------- {package}")
                 self.downloaded_packages.append({

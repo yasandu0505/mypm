@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 from repository.repository import Repository
+from .dependency_resolver import DependencyResolver
+from .package_downloader import PackageDownloader
+from .package_installer import PackageInstaller
 
 class Command(ABC):
     def __init__(self, package_manager):
@@ -30,31 +33,16 @@ class PackageManager:
         self.repository = Repository()
 
     def install_package(self, package_name):
-        from .dependency_resolver import DependencyResolver
-        from .package_downloader import PackageDownloader
-        from .package_installer import PackageInstaller
-        
         package = self.repository.find_package(package_name=package_name)
         dependency_resolver = DependencyResolver(dependencies=package["dependencies"])
         resolved_dependencies = dependency_resolver.resolve()
         resolved_dependencies.append(package_name)
         print(f"Resolved dependencies --------- {resolved_dependencies}")
-        downloader = PackageDownloader(packages_to_download=resolved_dependencies)
+        downloader = PackageDownloader(packages_to_download=resolved_dependencies, repository=self.repository)
         downloaded_packages = downloader.download()
         print(f"Downloaded packages --------- {downloaded_packages}")
-        installer = PackageInstaller(downloaded_packages)
-        installed_packages = installer.install()
-        if installed_packages:
-            for package in installed_packages:
-                if package["name"] == package_name:
-                    print(f"------- {package["name"]} was installed successfully")
-                else:
-                    print(f"------- {package["name"]} was installed as dependency")
-            # print(f"{}")
-            # for package in installed_packages:
-            #     if package != package_name:
-            #         print(f"{package}")
-
+        installer = PackageInstaller(downloaded_packages, package_name=package_name)
+        installer.install()
 
     def uninstall_package(self):
         pass
