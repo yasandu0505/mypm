@@ -10,14 +10,14 @@ class DependencyResolver:
         if not found_dependency["dependencies"]:
             if dependency not in self.final_dependency_list:
                 self.final_dependency_list.append(dependency)
-            print("no more sub dependencies.....")
+            print("No more sub dependencies.....")
             print("\n")
             return
-        print(f"fouuuuuuuuunnndddd  ----  {found_dependency["dependencies"]}")
-        for dependencyy in found_dependency["dependencies"]:
-            if dependencyy not in self.final_dependency_list:
-                self.final_dependency_list.insert(0,dependencyy)
-            self.find_dependencies(dependency=dependencyy)
+        print(f"Dependencies found --------- {found_dependency["dependencies"]}")
+        for sub_dependency in found_dependency["dependencies"]:
+            if sub_dependency not in self.final_dependency_list:
+                self.final_dependency_list.insert(0,sub_dependency)
+            self.find_dependencies(dependency=sub_dependency)
 
     def resolve(self) -> list:
         print("\n")
