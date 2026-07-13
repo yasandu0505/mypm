@@ -34,7 +34,7 @@ class PackageManager:
 
     def install_package(self, package_name):
         package = self.repository.find_package(package_name=package_name)
-        dependency_resolver = DependencyResolver(dependencies=package["dependencies"])
+        dependency_resolver = DependencyResolver(dependencies=package["dependencies"], repository=self.repository)
         resolved_dependencies = dependency_resolver.resolve()
         resolved_dependencies.append(package_name)
         print(f"Resolved dependencies --------- {resolved_dependencies}")
