@@ -1,29 +1,27 @@
 class DependencyResolver:
-    def __init__(self, dependencies, repository):
-        self.dependencies = dependencies
+    def __init__(self, package, repository):
+        self.package = package
         self.repository = repository
-        self.final_dependency_list = []
+        self.visited_dependencies = set()
+        self.final_dependency_order = []
     
-    def find_dependencies(self, dependency):
+    def find_dependencies(self, package):
         print("\n")
-        found_dependency = self.repository.find_package(package_name=dependency)
-        if not found_dependency["dependencies"]:
-            if dependency not in self.final_dependency_list:
-                self.final_dependency_list.append(dependency)
-            print("No more sub dependencies.....")
-            print("\n")
+        if package in self.visited_dependencies:
             return
-        print(f"Dependencies found --------- {found_dependency["dependencies"]}")
+        
+        self.visited_dependencies.add(package)
+
+        found_dependency = self.repository.find_package(package_name=package)
+
         for sub_dependency in found_dependency["dependencies"]:
-            if sub_dependency not in self.final_dependency_list:
-                self.final_dependency_list.insert(0,sub_dependency)
-            self.find_dependencies(dependency=sub_dependency)
+            self.find_dependencies(package=sub_dependency)
+        
+        self.final_dependency_order.append(package)
+
 
     def resolve(self) -> list:
         print("\n")
-        print(f"Resolving dependencies --------- {self.dependencies}")
-        for dependency in self.dependencies:
-            self.find_dependencies(dependency=dependency)
-            if dependency not in self.final_dependency_list:
-                self.final_dependency_list.append(dependency)
-        return self.final_dependency_list
+        print(f"Resolving dependencies --------- {self.package}")
+        self.find_dependencies(package=self.package)
+        return self.final_dependency_order
